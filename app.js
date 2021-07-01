@@ -100,3 +100,4 @@ function setGameOver(isOver){
     isGameOver = isOver;
     console.log(`isGameOver = ${isGameOver}`)
 }
+alert("testing");
