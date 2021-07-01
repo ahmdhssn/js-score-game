@@ -1,48 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-  <!-- Basic Page Needs
+  <head>
+    <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>Your page title here :)</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8" />
+    <title>Your page title here :)</title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
-  <!-- Mobile Specific Metas
+    <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="css/app.css" />
 
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
+  </head>
+  <body>
+    <div class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half is-offset-one-quarter">
+            <div class="card">
+              <div class="card-image">
+                <figure class="image is-2by1">
+                  <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="">
+                </figure>
+              </div>
+              <header class="card-header">
+                <p class="card-header-title">
+                  JS Score Game [Bulma]
+                </p>
+              </header>  
+              <div class="card-content">
+                <div class="content">
+                  <p class="">This page will display a 2 player score game in which each player can click a button to reach a set goal in count to win the game.</p>
+                </div>
+                <div class="content">
+                  <h1 class="title is-1"><span id="p1Display">0</span> to <span id="p2Display">0</span></h1>
+                  <p>Use the buttons below to keep the score.</p>
+                  
+                  <label for="winningScore" class="label is-large is-inline">Play To </label>
+                  <div class="select is-rounded">
+                    <select id="winningScore">
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                    </select>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <button class="button is-primary card-footer-item " id="btnPlayerOne">+1 Player One</button>
+                <button class="button is-warning card-footer-item " id="btnPlayerTwo">+1 Player Two</button>
+                <button class="button is-danger card-footer-item " id="btnReset">Reset</button>
+              </footer>
+            </div>
+          </div>
 
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="images/favicon.png">
-
-</head>
-<body>
-
-  <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <div class="container">
-    <div class="row">
-      <div class="one-half column" style="margin-top: 25%">
-        <h4 style="text-align: center;">JS Score Game</h4>
-        <p>This page will display a 2 player score game in which each player can click a button to reach a set goal in count to win the game.</p>
+        </div>
       </div>
     </div>
-  </div>
-
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-<!-- SCRIPT -->
-<script src="app.js"></script>
-</body>
+    <!-- SCRIPT -->
+    <script src="app.js"></script>
+  </body>
 </html>
