@@ -1,114 +1,87 @@
-// const p1 = {
-//     score: 0,
-//     button: document.querySelector('#p1Button'),
-//     display: document.querySelector('#p1Display')
-// }
-// const p2 = {
-//     score: 0,
-//     button: document.querySelector('#p2Button'),
-//     display: document.querySelector('#p2Display')
-// }
-
-// const resetButton = document.querySelector('#reset');
-// const winningScoreSelect = document.querySelector('#playto');
-// let winningScore = 3;
-// let isGameOver = false;
-
-// function updateScores(player, opponent) {
-//     if (!isGameOver) {
-//         player.score += 1;
-//         if (player.score === winningScore) {
-//             isGameOver = true;
-//             player.display.classList.add('has-text-success');
-//             opponent.display.classList.add('has-text-danger');
-//             player.button.disabled = true;
-//             opponent.button.disabled = true;
-//         }
-//         player.display.textContent = player.score;
-//     }
-// }
-
-
-// p1.button.addEventListener('click', function () {
-//     updateScores(p1, p2)
-// })
-// p2.button.addEventListener('click', function () {
-//     updateScores(p2, p1)
-// })
-
-
-// winningScoreSelect.addEventListener('change', function () {
-//     winningScore = parseInt(this.value);
-//     reset();
-// })
-
-// resetButton.addEventListener('click', reset)
-
-// function reset() {
-//     isGameOver = false;
-//     for (let p of [p1, p2]) {
-//         p.score = 0;
-//         p.display.textContent = 0;
-//         p.display.classList.remove('has-text-success', 'has-text-danger');
-//         p.button.disabled = false;
-//     }
-// }
-
-let p1Score = 0;
-let p2Score = 0;
-let defaultWinningScore = 5;
-let winningScore = defaultWinningScore;
-let isGameOver = false;
-
-const p1Display = document.querySelector("#p1Display");
-const p2Display = document.querySelector("#p2Display");
-const playTo = document.querySelector("#winningScore");
-const p1Button = document.querySelector("#btnPlayerOne");
-const p2Button = document.querySelector("#btnPlayerTwo");
-const resetButton = document.querySelector("#btnReset");
-
-p1Button.addEventListener("click", (e)=>{
-    console.log("isGameOver: ", isGameOver);
-    if(!isGameOver){
-        p1Score++;
-        if(winningScore==p1Score){
-            isGameOver = true;
-            p1Display.classList.add("has-text-success");
-            p2Display.classList.add("has-text-danger");
-        }
-        p1Display.textContent = p1Score;
+const game = {
+    isGameOver: false,
+    defaultWinningScore: 5,
+    winningScore: 3,
+    winningScoreOptions: [3,5,8,11],
+    winningScoreSelect: document.querySelector("#winningScore"),
+    resetButton: document.querySelector("#btnReset"),
+    playerOne: {
+        score: 0,
+        name: "Player One",
+        button: document.querySelector("#btnPlayerOne"),
+        display: document.querySelector("#p1Display")
+    },
+    playerTwo: {
+        score: 0,
+        name: "Player Two",
+        button: document.querySelector("#btnPlayerTwo"),
+        display: document.querySelector("#p2Display")
     }
+};
+
+game.playerOne.button.addEventListener("click", function(){
+    updateScores(game.playerOne,game.playerTwo);
 });
-p2Button.addEventListener("click", (e)=>{
-        console.log("isGameOver: ", isGameOver);
-    if(!isGameOver){
-        p2Score++;
-        if(winningScore==p2Score){
-            isGameOver = true;
-            p1Display.classList.add("has-text-danger");
-            p2Display.classList.add("has-text-success");
+game.playerTwo.button.addEventListener("click", function(){
+    updateScores(game.playerTwo,game.playerOne);
+});
+
+function updateScores(player, opponent){
+    if(!game.isGameOver){
+        player.score++;
+        if(game.winningScore==player.score){
+            game.isGameOver = true;
+            player.display.classList.add("has-text-success");
+            opponent.display.classList.add("has-text-danger");
+            player.button.disabled = true;
+            opponent.button.disabled = true;
         }
-        p2Display.textContent = p2Score;
+        if(player.score + opponent.score === 1){
+            game.resetButton.disabled = false;
+            game.winningScoreSelect.disabled = !game.resetButton.disabled;
+        }
+        player.display.textContent = player.score;
     }
-});
-resetButton.addEventListener("click", ()=>{
-    winningScore = defaultWinningScore;
-    reset();
-});
-
-playTo.addEventListener("change",function(){
-    winningScore = parseInt(this.value);
-    reset();
-});
-
-function reset(){
-    console.log("Winning Score: ", winningScore);
-    p1Score = 0;
-    p2Score = 0;
-    p1Display.textContent = 0;
-    p2Display.textContent = 0;
-    p1Display.classList.remove("loserScore", "winnerScore");
-    p2Display.classList.remove("loserScore", "winnerScore");
-    playTo.value = winningScore;
-    isGameOver = false;
 }
+
+game.resetButton.addEventListener("click", function(){
+    gameInit();
+});
+
+game.winningScoreSelect.addEventListener("change",function(){
+    game.winningScore = parseInt(game.winningScoreSelect.value);
+    reset();
+});
+
+function reset(isGameReset){
+    console.log("Winning Score: ", game.winningScore);
+    for(let p of [game.playerOne, game.playerTwo]){
+        p.score=0;
+        p.display.textContent=0;
+        p.button.innerHTML = "+1 " +p.name;
+        p.display.classList.remove("has-text-success", "has-text-danger");
+        p.button.disabled = false;
+    }
+    if (isGameReset){
+        game.winningScore = game.defaultWinningScore;
+        game.winningScoreSelect.value = game.winningScore;
+        game.winningScoreSelect.disabled = false;
+    }else{
+        game.winningScore = parseInt(game.winningScoreSelect.value);
+    }
+    game.isGameOver = false;
+    game.resetButton.disabled = game.winningScore===game.defaultWinningScore;
+}
+
+function gameInit(){
+    game.winningScoreSelect.textContent = "";
+    for(let o of game.winningScoreOptions){
+        const opt = document.createElement("option");
+        opt.value = o;
+        opt.textContent = o;
+        game.winningScoreSelect.append(opt);
+    }
+    reset(true);
+}
+
+gameInit();
